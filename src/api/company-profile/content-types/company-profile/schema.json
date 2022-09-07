@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "company_profiles",
+  "info": {
+    "singularName": "company-profile",
+    "pluralName": "company-profiles",
+    "displayName": "Company Profile",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "uen": {
+      "type": "string",
+      "required": true
+    },
+    "company_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::company-type.company-type",
+      "inversedBy": "company_profile"
+    },
+    "departments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::department.department",
+      "mappedBy": "company_profile"
+    }
+  }
+}

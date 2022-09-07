@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_profiles",
+  "info": {
+    "singularName": "user-profile",
+    "pluralName": "user-profiles",
+    "displayName": "User Profile",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "first_name": {
+      "pluginOptions": {},
+      "type": "string",
+      "required": true
+    },
+    "last_name": {
+      "pluginOptions": {},
+      "type": "string"
+    },
+    "email_address": {
+      "type": "email"
+    },
+    "phone_number": {
+      "type": "biginteger"
+    }
+  }
+}

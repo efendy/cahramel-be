@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "company_types",
+  "info": {
+    "singularName": "company-type",
+    "pluralName": "company-types",
+    "displayName": "Company Type",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "short_name": {
+      "type": "string",
+      "required": true
+    },
+    "company_profile": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::company-profile.company-profile",
+      "inversedBy": "company_type"
+    }
+  }
+}

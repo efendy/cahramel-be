@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "departments",
+  "info": {
+    "singularName": "department",
+    "pluralName": "departments",
+    "displayName": "Department"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "short_name": {
+      "type": "string",
+      "required": true
+    },
+    "company_profile": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company-profile.company-profile",
+      "inversedBy": "departments"
+    }
+  }
+}

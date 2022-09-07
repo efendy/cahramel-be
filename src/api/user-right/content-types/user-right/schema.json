@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_rights",
+  "info": {
+    "singularName": "user-right",
+    "pluralName": "user-rights",
+    "displayName": "User Right",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "short_name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "level": {
+      "type": "integer",
+      "required": true,
+      "default": 1
+    }
+  }
+}
