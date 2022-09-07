@@ -24,7 +24,7 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::company-profile.company-profile",
-      "inversedBy": "company_type"
+      "mappedBy": "company_type"
     }
   }
 }
