@@ -1,0 +1,32 @@
+{
+  "name": "cahramel-be",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Backend Headless CMS",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "@strapi/plugin-i18n": "4.3.6",
+    "@strapi/plugin-users-permissions": "4.3.6",
+    "@strapi/strapi": "4.3.6",
+    "mysql": "2.18.1",
+    "strapi-provider-upload-do": "3.6.6",
+    "uniqid": "5.4.0"
+  },
+  "author": {
+    "name": "Grow Financial Pte. Ltd."
+  },
+  "strapi": {
+    "uuid": "8d283036-e6d2-44e3-ad2a-b23d286c514f"
+  },
+  "engines": {
+    "node": "16.15.0",
+    "npm": "8.5.5"
+  },
+  "license": "MIT"
+}
