@@ -4,7 +4,8 @@
   "info": {
     "singularName": "department",
     "pluralName": "departments",
-    "displayName": "Department"
+    "displayName": "Department",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -24,6 +25,11 @@
       "relation": "manyToOne",
       "target": "api::company-profile.company-profile",
       "inversedBy": "departments"
+    },
+    "parent": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::department.department"
     }
   }
 }

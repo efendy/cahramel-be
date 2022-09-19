@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_contracts",
+  "info": {
+    "singularName": "user-contract",
+    "pluralName": "user-contracts",
+    "displayName": "User Contract",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "company_profile": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::company-profile.company-profile"
+    },
+    "job_title": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::job-title.job-title"
+    },
+    "reporting_to_main": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-contract.user-contract"
+    },
+    "reporting_to_secondary": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-contract.user-contract"
+    },
+    "user_profile": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::user-profile.user-profile",
+      "inversedBy": "user_contracts"
+    }
+  }
+}

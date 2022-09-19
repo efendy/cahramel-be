@@ -26,6 +26,12 @@
     },
     "phone_number": {
       "type": "biginteger"
+    },
+    "user_contracts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-contract.user-contract",
+      "mappedBy": "user_profile"
     }
   }
 }

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "job-title",
     "pluralName": "job-titles",
-    "displayName": "Job Title"
+    "displayName": "Job Title",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -17,6 +18,11 @@
     },
     "description": {
       "type": "text"
+    },
+    "parent": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::job-title.job-title"
     }
   }
 }
