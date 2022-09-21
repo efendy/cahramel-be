@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_features",
+  "info": {
+    "singularName": "user-feature",
+    "pluralName": "user-features",
+    "displayName": "User Feature"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "code": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "path": {
+      "type": "string"
+    }
+  }
+}

@@ -37,6 +37,17 @@
       "relation": "manyToOne",
       "target": "api::user-profile.user-profile",
       "inversedBy": "user_contracts"
+    },
+    "user_right": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-right.user-right"
+    },
+    "date_start": {
+      "type": "date"
+    },
+    "date_end": {
+      "type": "date"
     }
   }
 }

@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_rights",
+  "info": {
+    "singularName": "user-right",
+    "pluralName": "user-rights",
+    "displayName": "User Right",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "type": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "user_features": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-feature.user-feature"
+    }
+  }
+}
