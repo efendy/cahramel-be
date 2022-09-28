@@ -36,6 +36,18 @@
       "type": "boolean",
       "default": false,
       "required": true
+    },
+    "parent_company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company-profile.company-profile",
+      "inversedBy": "child_companies"
+    },
+    "child_companies": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::company-profile.company-profile",
+      "mappedBy": "parent_company"
     }
   }
 }
