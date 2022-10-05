@@ -48,6 +48,9 @@
     },
     "date_end": {
       "type": "date"
+    },
+    "email_address": {
+      "type": "email"
     }
   }
 }

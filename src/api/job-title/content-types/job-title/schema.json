@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
+    "title": {
       "type": "string",
       "required": true
     },
@@ -23,6 +23,11 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::job-title.job-title"
+    },
+    "industry_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::industry-type.industry-type"
     }
   }
 }

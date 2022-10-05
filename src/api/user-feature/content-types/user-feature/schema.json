@@ -4,22 +4,22 @@
   "info": {
     "singularName": "user-feature",
     "pluralName": "user-features",
-    "displayName": "User Feature"
+    "displayName": "User Feature",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
+    "title": {
       "type": "string"
     },
     "description": {
       "type": "text"
     },
     "code": {
-      "type": "uid",
-      "targetField": "name"
+      "type": "uid"
     },
     "path": {
       "type": "string"

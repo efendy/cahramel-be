@@ -12,24 +12,22 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
+    "title": {
       "type": "string",
       "required": true
     },
-    "short_name": {
-      "type": "string",
-      "required": true
-    },
-    "company_profile": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::company-profile.company-profile",
-      "inversedBy": "departments"
-    },
-    "parent": {
+    "parent_department": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::department.department"
+    },
+    "description": {
+      "type": "text"
+    },
+    "company_profile": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::company-profile.company-profile"
     }
   }
 }

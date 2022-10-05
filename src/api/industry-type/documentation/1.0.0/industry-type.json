@@ -1,5 +1,5 @@
 {
-  "/company-types": {
+  "/industry-types": {
     "get": {
       "responses": {
         "200": {
@@ -7,7 +7,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CompanyTypeListResponse"
+                "$ref": "#/components/schemas/IndustryTypeListResponse"
               }
             }
           }
@@ -64,7 +64,7 @@
         }
       },
       "tags": [
-        "Company-type"
+        "Industry-type"
       ],
       "parameters": [
         {
@@ -159,7 +159,7 @@
           "style": "deepObject"
         }
       ],
-      "operationId": "get/company-types"
+      "operationId": "get/industry-types"
     },
     "post": {
       "responses": {
@@ -168,7 +168,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CompanyTypeResponse"
+                "$ref": "#/components/schemas/IndustryTypeResponse"
               }
             }
           }
@@ -225,23 +225,23 @@
         }
       },
       "tags": [
-        "Company-type"
+        "Industry-type"
       ],
       "parameters": [],
-      "operationId": "post/company-types",
+      "operationId": "post/industry-types",
       "requestBody": {
         "required": true,
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/CompanyTypeRequest"
+              "$ref": "#/components/schemas/IndustryTypeRequest"
             }
           }
         }
       }
     }
   },
-  "/company-types/{id}": {
+  "/industry-types/{id}": {
     "get": {
       "responses": {
         "200": {
@@ -249,7 +249,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CompanyTypeResponse"
+                "$ref": "#/components/schemas/IndustryTypeResponse"
               }
             }
           }
@@ -306,7 +306,7 @@
         }
       },
       "tags": [
-        "Company-type"
+        "Industry-type"
       ],
       "parameters": [
         {
@@ -320,7 +320,7 @@
           }
         }
       ],
-      "operationId": "get/company-types/{id}"
+      "operationId": "get/industry-types/{id}"
     },
     "put": {
       "responses": {
@@ -329,7 +329,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CompanyTypeResponse"
+                "$ref": "#/components/schemas/IndustryTypeResponse"
               }
             }
           }
@@ -386,7 +386,7 @@
         }
       },
       "tags": [
-        "Company-type"
+        "Industry-type"
       ],
       "parameters": [
         {
@@ -400,13 +400,13 @@
           }
         }
       ],
-      "operationId": "put/company-types/{id}",
+      "operationId": "put/industry-types/{id}",
       "requestBody": {
         "required": true,
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/CompanyTypeRequest"
+              "$ref": "#/components/schemas/IndustryTypeRequest"
             }
           }
         }
@@ -477,7 +477,7 @@
         }
       },
       "tags": [
-        "Company-type"
+        "Industry-type"
       ],
       "parameters": [
         {
@@ -491,7 +491,7 @@
           }
         }
       ],
-      "operationId": "delete/company-types/{id}"
+      "operationId": "delete/industry-types/{id}"
     }
   }
 }

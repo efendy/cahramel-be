@@ -12,25 +12,13 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
+    "title": {
       "type": "string",
       "required": true
     },
     "uen": {
       "type": "string",
       "required": true
-    },
-    "company_type": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::company-type.company-type",
-      "inversedBy": "company_profile"
-    },
-    "departments": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::department.department",
-      "mappedBy": "company_profile"
     },
     "is_verified": {
       "type": "boolean",
@@ -39,15 +27,16 @@
     },
     "parent_company": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::company-profile.company-profile",
-      "inversedBy": "child_companies"
+      "relation": "oneToOne",
+      "target": "api::company-profile.company-profile"
     },
-    "child_companies": {
+    "description": {
+      "type": "text"
+    },
+    "industry_type": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::company-profile.company-profile",
-      "mappedBy": "parent_company"
+      "relation": "oneToOne",
+      "target": "api::industry-type.industry-type"
     }
   }
 }
