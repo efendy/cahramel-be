@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_leaves",
+  "info": {
+    "singularName": "user-leave",
+    "pluralName": "user-leaves",
+    "displayName": "User Leave"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "leave_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::leave-type.leave-type"
+    }
+  }
+}

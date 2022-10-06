@@ -18,7 +18,7 @@
     },
     "uen": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "is_verified": {
       "type": "boolean",
@@ -37,6 +37,24 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::industry-type.industry-type"
+    },
+    "contact_address": {
+      "type": "string"
+    },
+    "contact_postal_code": {
+      "type": "string"
+    },
+    "image_profile": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "unique_id": {
+      "type": "string",
+      "unique": true
     }
   }
 }

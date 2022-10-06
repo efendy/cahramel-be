@@ -51,6 +51,14 @@
     },
     "email_address": {
       "type": "email"
+    },
+    "employment_id": {
+      "type": "string"
+    },
+    "department": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::department.department"
     }
   }
 }

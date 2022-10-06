@@ -1,17 +1,20 @@
 {
   "kind": "collectionType",
-  "collectionName": "user_rights",
+  "collectionName": "onboardings",
   "info": {
-    "singularName": "user-right",
-    "pluralName": "user-rights",
-    "displayName": "User Right",
-    "description": ""
+    "singularName": "onboarding",
+    "pluralName": "onboardings",
+    "displayName": "Onboarding"
   },
   "options": {
     "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
+    "is_published": {
+      "type": "boolean",
+      "default": false
+    },
     "title": {
       "type": "string",
       "required": true
@@ -19,24 +22,20 @@
     "description": {
       "type": "text"
     },
-    "user_features": {
+    "job_title": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::user-feature.user-feature"
+      "relation": "oneToOne",
+      "target": "api::job-title.job-title"
+    },
+    "department": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::department.department"
     },
     "company_profile": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::company-profile.company-profile"
-    },
-    "type": {
-      "type": "enumeration",
-      "enum": [
-        "user",
-        "admin",
-        "owner"
-      ],
-      "default": "user"
     }
   }
 }

@@ -19,9 +19,9 @@
     "description": {
       "type": "text"
     },
-    "parent": {
+    "parents": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::job-title.job-title"
     },
     "industry_type": {

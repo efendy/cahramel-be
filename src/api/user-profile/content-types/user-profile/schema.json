@@ -22,7 +22,9 @@
       "type": "string"
     },
     "email_address": {
-      "type": "email"
+      "type": "email",
+      "unique": true,
+      "required": true
     },
     "phone_number": {
       "type": "biginteger"
@@ -32,6 +34,64 @@
       "relation": "oneToMany",
       "target": "api::user-contract.user-contract",
       "mappedBy": "user_profile"
+    },
+    "birthday": {
+      "type": "date"
+    },
+    "gender": {
+      "type": "enumeration",
+      "enum": [
+        "notset",
+        "male",
+        "female"
+      ],
+      "default": "notset"
+    },
+    "marital_status": {
+      "type": "enumeration",
+      "enum": [
+        "single",
+        "married",
+        "divorced",
+        "widowed",
+        "separated"
+      ],
+      "default": "single"
+    },
+    "nationality": {
+      "type": "string"
+    },
+    "race": {
+      "type": "enumeration",
+      "enum": [
+        "notset",
+        "others",
+        "chinese",
+        "malay",
+        "indian",
+        "eurasian"
+      ],
+      "default": "notset"
+    },
+    "image_profile": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "religion": {
+      "type": "enumeration",
+      "enum": [
+        "notset",
+        "buddhism",
+        "hinduism",
+        "islam",
+        "christianity",
+        "others"
+      ],
+      "default": "notset"
     }
   }
 }

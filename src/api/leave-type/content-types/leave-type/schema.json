@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "leave_types",
+  "info": {
+    "singularName": "leave-type",
+    "pluralName": "leave-types",
+    "displayName": "Leave Type"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "is_published": {
+      "type": "boolean"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "company_profile": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::company-profile.company-profile"
+    }
+  }
+}
