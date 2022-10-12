@@ -38,11 +38,6 @@
       "target": "api::user-profile.user-profile",
       "inversedBy": "user_contracts"
     },
-    "user_right": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::user-right.user-right"
-    },
     "date_start": {
       "type": "date"
     },
@@ -59,6 +54,15 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::department.department"
+    },
+    "access_role": {
+      "type": "enumeration",
+      "enum": [
+        "user",
+        "admin",
+        "owner"
+      ],
+      "default": "user"
     }
   }
 }

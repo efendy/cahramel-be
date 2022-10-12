@@ -12,17 +12,51 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "title": {
-      "type": "string"
-    },
-    "description": {
-      "type": "text"
-    },
-    "code": {
-      "type": "uid"
-    },
     "path": {
       "type": "string"
+    },
+    "role": {
+      "type": "enumeration",
+      "enum": [
+        "user",
+        "admin",
+        "owner"
+      ],
+      "default": "user"
+    },
+    "api": {
+      "type": "enumeration",
+      "enum": [
+        "company-profile",
+        "department",
+        "industry-type",
+        "job-title",
+        "leave-type",
+        "offboarding",
+        "offboarding-step",
+        "onboarding",
+        "onboarding-step",
+        "user-contract",
+        "user-feature",
+        "user-leave",
+        "user-profile"
+      ]
+    },
+    "create": {
+      "type": "boolean",
+      "default": true
+    },
+    "read": {
+      "type": "boolean",
+      "default": false
+    },
+    "update": {
+      "type": "boolean",
+      "default": false
+    },
+    "delete": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
