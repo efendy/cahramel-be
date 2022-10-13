@@ -92,6 +92,12 @@
         "others"
       ],
       "default": "notset"
+    },
+    "registered_companies": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::company-profile.company-profile",
+      "mappedBy": "registered_by"
     }
   }
 }
