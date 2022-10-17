@@ -85,6 +85,11 @@
     },
     "complete_offboarding_by": {
       "type": "date"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
     }
   }
 }
