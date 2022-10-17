@@ -71,12 +71,6 @@
     },
     "last_name": {
       "type": "string"
-    },
-    "user_profile": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::user-profile.user-profile",
-      "inversedBy": "users"
     }
   }
 }

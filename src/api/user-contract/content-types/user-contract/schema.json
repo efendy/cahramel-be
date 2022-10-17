@@ -32,12 +32,6 @@
       "relation": "oneToOne",
       "target": "api::user-contract.user-contract"
     },
-    "user_profile": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::user-profile.user-profile",
-      "inversedBy": "user_contracts"
-    },
     "date_start": {
       "type": "date"
     },
