@@ -41,7 +41,7 @@
     "email_address": {
       "type": "email"
     },
-    "employment_id": {
+    "employee_id": {
       "type": "string"
     },
     "department": {
@@ -57,6 +57,34 @@
         "owner"
       ],
       "default": "user"
+    },
+    "is_draft": {
+      "type": "boolean",
+      "default": true
+    },
+    "onboarding_status": {
+      "type": "enumeration",
+      "enum": [
+        "need",
+        "noneed",
+        "done"
+      ],
+      "default": "need"
+    },
+    "offboarding_status": {
+      "type": "enumeration",
+      "enum": [
+        "need",
+        "noneed",
+        "done"
+      ],
+      "default": "need"
+    },
+    "complete_onboarding_by": {
+      "type": "date"
+    },
+    "complete_offboarding_by": {
+      "type": "date"
     }
   }
 }
