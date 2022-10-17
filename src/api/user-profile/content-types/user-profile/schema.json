@@ -102,8 +102,7 @@
     "users": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "plugin::users-permissions.user",
-      "mappedBy": "user_profile"
+      "target": "plugin::users-permissions.user"
     }
   }
 }

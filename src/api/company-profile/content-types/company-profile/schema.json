@@ -55,6 +55,12 @@
     "unique_id": {
       "type": "string",
       "unique": true
+    },
+    "registered_by": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::user-profile.user-profile",
+      "inversedBy": "registered_companies"
     }
   }
 }
