@@ -116,3 +116,5 @@ build
 dist/
 
 dkim*
+
+full_documentation.json
