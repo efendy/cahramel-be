@@ -12,14 +12,31 @@ module.exports = createCoreController('api::user-profile.user-profile', ({ strap
     if (ctx.params.id == "me" && ctx.state?.user?.id) {
       console.log(ctx.state?.user?.id)
       const userId = ctx.state?.user?.id;
+      const userState = ctx.state.user;
+
+      // to return if user is logged in but no user profile
+      const defaultUserInfo = {
+        id: 0,
+        attributes: {
+          username: userState?.username,
+          email: userState?.email,
+          first_name: userState?.first_name,
+          last_name: userState?.last_name,
+        }
+      }
 
       delete ctx.params.id;
 
-      ctx.request.url = `/api/user-profiles?filters[users]=${userId}`;
+      ctx.request.url = `/api/user-profiles?filters[user]=${userId}&populate=*`;
 
+      let userProfile = null;
       const result = await super.find(ctx);
       if (result.data?.length > 0) {
-        response = result.data[0];
+        userProfile = result.data[0]
+      }
+      response = {
+        ...defaultUserInfo,
+        ...userProfile
       }
     } else {
       response = await super.findOne(ctx);
