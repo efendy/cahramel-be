@@ -99,10 +99,11 @@
       "target": "api::company-profile.company-profile",
       "mappedBy": "registered_by"
     },
-    "users": {
+    "user": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "plugin::users-permissions.user"
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "user_profile"
     }
   }
 }
