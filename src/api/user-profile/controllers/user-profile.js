@@ -26,8 +26,9 @@ module.exports = createCoreController('api::user-profile.user-profile', ({ strap
       }
 
       delete ctx.params.id;
-
-      ctx.request.url = `/api/user-profiles?filters[user]=${userId}&populate=*`;
+      const currentURL = ctx.request.url.replace('/me', '')
+      const hasParam = currentURL.includes('?');
+      ctx.request.url = `${currentURL}${hasParam ? '&' : '?'}filters[user]=${userId}`;
 
       let userProfile = null;
       const result = await super.find(ctx);
