@@ -96,6 +96,10 @@
       "relation": "manyToOne",
       "target": "api::user-profile.user-profile",
       "inversedBy": "user_contracts"
+    },
+    "code": {
+      "type": "string",
+      "private": true
     }
   }
 }

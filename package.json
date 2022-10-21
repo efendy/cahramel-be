@@ -21,7 +21,8 @@
     "dotenv": "16.0.0",
     "mysql": "2.18.1",
     "strapi-provider-upload-do": "3.6.6",
-    "uniqid": "5.4.0"
+    "uniqid": "5.4.0",
+    "uuid": "9.0.0"
   },
   "author": {
     "name": "Grow Financial Pte. Ltd."
