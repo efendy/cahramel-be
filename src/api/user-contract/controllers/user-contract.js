@@ -57,6 +57,24 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
       }
     };
 
+    if (ctx.params.code) {
+      const entity = await strapi.db.query("api::user-contract.user-contract").findOne({
+        select: ['id'],
+        where: { code: ctx.params.code },
+        populate: {
+          user_profile: {
+            select: ['id', 'first_name', 'last_name', 'email_address', 'phone_number'],
+          },
+          user: {
+            select: ['id'],
+          },
+        },
+      });
+
+      const sanitizedEntity = await this.sanitizeOutput(entity);
+      response = this.transformResponse(entity);
+    }
+
     return response;
   },
 
