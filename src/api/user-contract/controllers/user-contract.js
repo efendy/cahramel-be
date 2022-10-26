@@ -29,37 +29,25 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
       const { id, profile, contract, draft, code } = ctx.request.body.data;
       
       if (profile && contract && contract.company_id) {
-        // retrieve authenticated user profile for getting user contract
-        const authUserProfile = await strapi.db.query("api::user-profile.user-profile").findOne({
-          select: ['id'],
-          where: { users: userId },
-        });
-
-        // retrieve authenticated user contract for access_role and company ids
-        // to ensure the authenticated user has the permission to set.
-        const authUserContracts = await strapi.db.query("api::user-contract.user-contract").findMany({
-          select: ['id', 'access_role'],
-          where: { user_profile: authUserProfile.id },
-          populate: {
-            company_profile: {
-              select: ['id']
-            }
-          },
-        });
+        // get authenticated user's contract
+        const authUserContracts = await this.getAuthUserContracts(userId);
+        if (authUserContracts.length <= 0) {
+          throw new ForbiddenError('You didn\'t say the magic word (35)');
+        }
 
         // an authenticated user doesn't allow to create user for different company
         // which the authenticated user doesn't have contract to.
         const authUserCompanyIds = authUserContracts.map(object => object.company_profile.id);
         if (!authUserCompanyIds.includes(contract.company_id)) {
           console.log(`auth user does not contract with the company id ${contract.company_id}.`);
-          throw new ForbiddenError('You didn\'t say the magic word');
+          throw new ForbiddenError('You didn\'t say the magic word (43)');
         }
 
         // validate setting access_role
         const authUserAccessRole = authUserContracts.find(object => object.company_profile.id === contract.company_id)?.access_role;
         if ((contract.access_role === 'owner' && (authUserAccessRole === 'user' || authUserAccessRole === 'admin')) ||
             authUserAccessRole === 'user') {
-          throw new ForbiddenError('You didn\'t say the magic word');
+          throw new ForbiddenError('You didn\'t say the magic word (50)');
         }
 
         let userProfileId;
@@ -100,7 +88,7 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
             where: { id },
           });
           if (!userContract) {
-            throw new NotFoundError('Does not exist');
+            throw new NotFoundError('Does not exist (91)');
           }
           userContractId = userContract.id;
         }
@@ -165,7 +153,7 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
     }
 
     if (!response)  {
-      throw new NotFoundError('Does not exist');
+      throw new NotFoundError('Does not exist (period)');
     }
     return response;
   },
@@ -190,12 +178,12 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
       }
       const companyId = userContract.company_profile?.id;
       if (!companyId) {
-        throw new NotFoundError('Does not exist (193)');
+        throw new NotFoundError('Does not exist (181)');
       }
 
       const authUserContracts = await this.getAuthUserContracts(userId);
       if (authUserContracts.length <= 0) {
-        throw new ForbiddenError('You didn\'t say the magic word (198)');
+        throw new ForbiddenError('You didn\'t say the magic word (186)');
       }
 
       // an authenticated user doesn't allow to create user for different company
@@ -203,19 +191,19 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
       const authUserCompanyIds = authUserContracts.map(object => object.company_profile.id);
       if (!authUserCompanyIds.includes(companyId)) {
         console.log(`auth user does not contract with the company id ${companyId}.`);
-        throw new ForbiddenError('You didn\'t say the magic word (206)');
+        throw new ForbiddenError('You didn\'t say the magic word (194)');
       }
       // validate setting access_role
       const authUserAccessRole = authUserContracts.find(object => object.company_profile.id === companyId)?.access_role;
       if (authUserAccessRole === 'user') {
-        throw new ForbiddenError('You didn\'t say the magic word (211)');
+        throw new ForbiddenError('You didn\'t say the magic word (199)');
       }
 
       return await super.delete(ctx);
     }
 
     if (!response)  {
-      throw new NotFoundError('Does not exist');
+      throw new NotFoundError('Does not exist (period)');
     }
     return response;
   },
@@ -267,7 +255,7 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
     }
 
     if (!response)  {
-      throw new NotFoundError('Does not exist');
+      throw new NotFoundError('Does not exist (period)');
     }
     return response;
   },
@@ -304,7 +292,7 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
     }
 
     if (!response)  {
-      throw new NotFoundError('Does not exist');
+      throw new NotFoundError('Does not exist (period)');
     }
     return response;
   },
