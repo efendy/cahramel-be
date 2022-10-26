@@ -56,7 +56,8 @@ module.exports = createCoreController('api::user-profile.user-profile', ({ strap
     if (ctx.request.body?.data) {
       const { user_id, email, code } = ctx.request.body.data;
 
-      if (user_id && email & code) {
+      if (user_id && email && code) {
+        console.log(user_id, email, code);
         const userId = user_id;
 
         // get email from user
@@ -67,10 +68,11 @@ module.exports = createCoreController('api::user-profile.user-profile', ({ strap
         
         // user email must matches the payload email
         if (user?.email === email) {
+          console.log('user?.email === email? YES');
           // retrieve user contract by code to get user profile id
           const userContract = await strapi.db.query("api::user-contract.user-contract").findOne({
             select: ['id'],
-            where: { code: code },
+            where: { code: code, is_draft: false },
             populate: {
               user_profile: {
                 select: ['id'],
@@ -79,6 +81,7 @@ module.exports = createCoreController('api::user-profile.user-profile', ({ strap
           });
           const userProfileId = userContract?.user_profile?.id;
 
+          console.log('userProfileId', userProfileId);
           if (userProfileId) {
             // get existing users in user profile
             const userProfile = await strapi.db.query("api::user-profile.user-profile").findOne({
@@ -92,7 +95,8 @@ module.exports = createCoreController('api::user-profile.user-profile', ({ strap
             });
 
             // user profile email must matches the payload email
-            if (userProfile?.email === email) {
+            if (userProfile?.email_address === email) {
+              console.log('userProfile?.email_address === email? YES');
               const userIds = userProfile.users.map(object => object.id);
               // link user to user profile
               let updateUserProfile = await strapi.db.query("api::user-profile.user-profile").update({
@@ -102,6 +106,7 @@ module.exports = createCoreController('api::user-profile.user-profile', ({ strap
                   users: [...userIds, userId],
                 }
               });
+              console.log('updateUserProfile', updateUserProfile);
               if (updateUserProfile) {
                 // remove invitation code
                 await strapi.db.query("api::user-contract.user-contract").update({
