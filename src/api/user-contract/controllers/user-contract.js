@@ -18,7 +18,7 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
   async draftSave(ctx) {
     delete ctx.request.body.data.draft;
     delete ctx.request.body.data.code;
-    return draftSavePrivate(ctx);
+    return this.draftSavePrivate(ctx);
   },
 
   async draftSavePrivate(ctx) {
@@ -219,7 +219,7 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
               subject: `Invitation to ${companyProfile.title}`,
               html: `<p>Dear ${profile.first_name}  ${profile.last_name}</p>
                 <p>We would like to welcome you to our platform.</p>
-                <p><a href='${process.env.CLIENT_URL}/auth/invite?code=${code}'>Open the invitation</a></p>
+                <p>${process.env.CLIENT_URL}/auth/invite?code=${code}</p>
                 <p>Best Regards,<br/>${companyProfile.title}</p>
               `,
             };
