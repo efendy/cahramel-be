@@ -28,7 +28,7 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
     if (userId && ctx.request.body?.data) {
       const { id, profile, contract, draft, code } = ctx.request.body.data;
       
-      if (profile && contract) {
+      if (profile && contract && contract.company_id) {
         // retrieve authenticated user profile for getting user contract
         const authUserProfile = await strapi.db.query("api::user-profile.user-profile").findOne({
           select: ['id'],
@@ -176,11 +176,11 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
     const userId = ctx.state?.user?.id;
     if (userId && ctx.params.id) {
       // retrieve contract
-      userContract = await strapi.db.query("api::user-contract.user-contract").findOne({
+      const userContract = await strapi.db.query("api::user-contract.user-contract").findOne({
         select: ['id'],
         where: { id: ctx.params.id },
         populate: {
-          company_id: {
+          company_profile: {
             select: ['id'],
           },
         },
@@ -188,18 +188,30 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
       if (!userContract) {
         throw new NotFoundError('Does not exist');
       }
-      userContractId = userContract.id;
+      const companyId = userContract.company_profile?.id;
+      if (!companyId) {
+        throw new NotFoundError('Does not exist (193)');
+      }
 
-      // check company
-      const companyProfile = await strapi.db.query("api::company-profile.company-profile").findOne({
-        select: ['title'],
-        where: { id: company_id },
-      });
-      // check admin permission
+      const authUserContracts = await this.getAuthUserContracts(userId);
+      if (authUserContracts.length <= 0) {
+        throw new ForbiddenError('You didn\'t say the magic word (198)');
+      }
 
-      // set user contract id
-      // const response = await super.delete(ctx);
-      
+      // an authenticated user doesn't allow to create user for different company
+      // which the authenticated user doesn't have contract to.
+      const authUserCompanyIds = authUserContracts.map(object => object.company_profile.id);
+      if (!authUserCompanyIds.includes(companyId)) {
+        console.log(`auth user does not contract with the company id ${companyId}.`);
+        throw new ForbiddenError('You didn\'t say the magic word (206)');
+      }
+      // validate setting access_role
+      const authUserAccessRole = authUserContracts.find(object => object.company_profile.id === companyId)?.access_role;
+      if (authUserAccessRole === 'user') {
+        throw new ForbiddenError('You didn\'t say the magic word (211)');
+      }
+
+      return await super.delete(ctx);
     }
 
     if (!response)  {
@@ -385,23 +397,30 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
     return response;
   },
 
-  async getAuthUserContract(userId) {
+  async getAuthUserContracts(userId) {
+    let resp = [];
+
     // retrieve authenticated user profile for getting user contract
     const authUserProfile = await strapi.db.query("api::user-profile.user-profile").findOne({
       select: ['id'],
       where: { users: userId },
     });
 
-    // retrieve authenticated user contract for access_role and company ids
-    // to ensure the authenticated user has the permission to set.
-    const authUserContracts = await strapi.db.query("api::user-contract.user-contract").findMany({
-      select: ['id', 'access_role'],
-      where: { user_profile: authUserProfile.id },
-      populate: {
-        company_profile: {
-          select: ['id']
-        }
-      },
-    });
+    if (authUserProfile) {
+      // retrieve authenticated user contract for access_role and company ids
+      // to ensure the authenticated user has the permission to set.
+      resp = await strapi.db.query("api::user-contract.user-contract").findMany({
+        select: ['id', 'access_role'],
+        where: { user_profile: authUserProfile.id },
+        populate: {
+          company_profile: {
+            select: ['id']
+          }
+        },
+      });
+    }
+    
+    return resp;
   },
+
 }));

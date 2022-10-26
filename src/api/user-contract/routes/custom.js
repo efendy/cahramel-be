@@ -6,7 +6,7 @@ module.exports = {
       handler: 'user-contract.draftSave',
     },
     {
-      method: 'GET',
+      method: 'DELETE',
       path: '/user-contracts/draft/delete/:id',
       handler: 'user-contract.draftDelete',
     },
