@@ -107,11 +107,11 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
 
         const userContractData = {
           employee_id: contract.employee_id,
-          job_title: contract.job_title_id,
-          reporting_to_main: contract.reporting_to_main_id,
-          reporting_to_secondary: contract.reporting_to_secondary_id,
-          department: contract.department_id,
-          company_profile: contract.company_id,
+          job_title: contract.job_title,
+          reporting_to_main: contract.reporting_to_main,
+          reporting_to_secondary: contract.reporting_to_secondary,
+          department: contract.department,
+          company_profile: contract.company_profile,
           date_start: contract.date_start ? dayjs(contract.date_start).format('YYYY-MM-DD') : null,
           date_end: contract.date_end ? dayjs(contract.date_end).format('YYYY-MM-DD') : null,
           onboarding_status: contract.onboarding_status,
@@ -174,8 +174,32 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
     let response;
 
     const userId = ctx.state?.user?.id;
-    if (userId) {
+    if (userId && ctx.params.id) {
+      // retrieve contract
+      userContract = await strapi.db.query("api::user-contract.user-contract").findOne({
+        select: ['id'],
+        where: { id: ctx.params.id },
+        populate: {
+          company_id: {
+            select: ['id'],
+          },
+        },
+      });
+      if (!userContract) {
+        throw new NotFoundError('Does not exist');
+      }
+      userContractId = userContract.id;
 
+      // check company
+      const companyProfile = await strapi.db.query("api::company-profile.company-profile").findOne({
+        select: ['title'],
+        where: { id: company_id },
+      });
+      // check admin permission
+
+      // set user contract id
+      // const response = await super.delete(ctx);
+      
     }
 
     if (!response)  {
@@ -212,10 +236,6 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
 
             const emailData = {
               to: profile?.email_address,
-              // from: 'your verified email address', //e.g. single sender verification in SendGrid
-              // cc: 'valid email address',
-              // bcc: 'valid email address',
-              // replyTo: 'valid email address',
               subject: `Invitation to ${companyProfile.title}`,
               html: `<p>Dear ${profile.first_name}  ${profile.last_name}</p>
                 <p>We would like to welcome you to our platform.</p>
@@ -365,4 +385,23 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
     return response;
   },
 
+  async getAuthUserContract(userId) {
+    // retrieve authenticated user profile for getting user contract
+    const authUserProfile = await strapi.db.query("api::user-profile.user-profile").findOne({
+      select: ['id'],
+      where: { users: userId },
+    });
+
+    // retrieve authenticated user contract for access_role and company ids
+    // to ensure the authenticated user has the permission to set.
+    const authUserContracts = await strapi.db.query("api::user-contract.user-contract").findMany({
+      select: ['id', 'access_role'],
+      where: { user_profile: authUserProfile.id },
+      populate: {
+        company_profile: {
+          select: ['id']
+        }
+      },
+    });
+  },
 }));
