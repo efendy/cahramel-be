@@ -4,6 +4,9 @@
  * user-profile controller
  */
 
+// const utils = require('@strapi/utils');
+// const { NotFoundError } = utils.errors;
+
 const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::user-profile.user-profile', ({ strapi }) => ({
@@ -41,6 +44,77 @@ module.exports = createCoreController('api::user-profile.user-profile', ({ strap
       }
     } else {
       response = await super.findOne(ctx);
+    }
+    return response;
+  },
+
+  async linkUser(ctx) {
+    let response = {
+      data: { message: "done" },
+    };
+
+    if (ctx.request.body?.data) {
+      const { user_id, email, code } = ctx.request.body.data;
+
+      if (user_id && email & code) {
+        const userId = user_id;
+
+        // get email from user
+        const user = await strapi.db.query("plugin::users-permissions.user").findOne({
+          select: ['email'],
+          where: { id: userId },
+        });
+        
+        // user email must matches the payload email
+        if (user?.email === email) {
+          // retrieve user contract by code to get user profile id
+          const userContract = await strapi.db.query("api::user-contract.user-contract").findOne({
+            select: ['id'],
+            where: { code: code },
+            populate: {
+              user_profile: {
+                select: ['id'],
+              },
+            },
+          });
+          const userProfileId = userContract?.user_profile?.id;
+
+          if (userProfileId) {
+            // get existing users in user profile
+            const userProfile = await strapi.db.query("api::user-profile.user-profile").findOne({
+              select: ['id', 'email_address'],
+              where: { id: userProfileId },
+              populate: {
+                users: {
+                  select: ['id'],
+                },
+              }
+            });
+
+            // user profile email must matches the payload email
+            if (userProfile?.email === email) {
+              const userIds = userProfile.users.map(object => object.id);
+              // link user to user profile
+              let updateUserProfile = await strapi.db.query("api::user-profile.user-profile").update({
+                select: ['id'],
+                where: { id: userProfileId },
+                data: {
+                  users: [...userIds, userId],
+                }
+              });
+              if (updateUserProfile) {
+                // remove invitation code
+                await strapi.db.query("api::user-contract.user-contract").update({
+                  where: { id: userContract.id },
+                  data: {
+                    code: null,
+                  }
+                });
+              }
+            }
+          }
+        }
+      }
     }
     return response;
   },

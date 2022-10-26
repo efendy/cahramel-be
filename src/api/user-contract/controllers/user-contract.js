@@ -3,11 +3,12 @@
 /**
  * user-contract controller
  */
+
 const utils = require('@strapi/utils');
+const { NotFoundError, ForbiddenError } = utils.errors;
 const dayjs = require('dayjs');
 const customParseFormat = require('dayjs/plugin/customParseFormat')
 dayjs.extend(customParseFormat)
-const { NotFoundError, ForbiddenError } = utils.errors;
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
