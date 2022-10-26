@@ -6,21 +6,27 @@
 
 const utils = require('@strapi/utils');
 const { NotFoundError, ForbiddenError } = utils.errors;
+const { v4: uuidv4 } = require('uuid');
 const dayjs = require('dayjs');
 const customParseFormat = require('dayjs/plugin/customParseFormat')
-dayjs.extend(customParseFormat)
+dayjs.extend(customParseFormat);
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::user-contract.user-contract', ({ strapi }) => ({
 
   async draftSave(ctx) {
+    delete ctx.request.body.data.draft;
+    delete ctx.request.body.data.code;
+    return draftSavePrivate(ctx);
+  },
+
+  async draftSavePrivate(ctx) {
     let response;
 
     const userId = ctx.state?.user?.id;
-
     if (userId && ctx.request.body?.data) {
-      const { id, profile, contract } = ctx.request.body.data;
+      const { id, profile, contract, draft, code } = ctx.request.body.data;
       
       if (profile && contract) {
         // retrieve authenticated user profile for getting user contract
@@ -112,7 +118,9 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
           offboarding_status: contract.offboarding_status,
           email_address: contract.email,
           access_role: contract.access_role,
-          user_profile: userProfileId
+          user_profile: userProfileId,
+          is_draft: draft === false ? false : true,
+          code: code ?? "",
         };
 
         if (userContractId) {
@@ -143,10 +151,15 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
         delete userContract.createdAt;
         delete userContract.updatedAt;
         delete userContract.code;
+        delete userContract.is_draft;
+        delete userContract.access_role;
 
         response = this.transformResponse({
+          id: userContract.id,
           profile: userProfile,
           contract: userContract,
+          company_id: contract.company_id,
+          job_title_id: contract.job_title_id,
         });
       }
     }
@@ -160,6 +173,11 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
   async draftDelete(ctx) {
     let response;
 
+    const userId = ctx.state?.user?.id;
+    if (userId) {
+
+    }
+
     if (!response)  {
       throw new NotFoundError('Does not exist');
     }
@@ -168,6 +186,53 @@ module.exports = createCoreController('api::user-contract.user-contract', ({ str
 
   async draftConfirm(ctx) {
     let response;
+
+    const userId = ctx.state?.user?.id;
+    if (userId) {
+      try {
+        const code = uuidv4();
+        ctx.request.body.data.draft = false;
+        ctx.request.body.data.code = code;
+        const saveDraft = await this.draftSavePrivate(ctx);
+
+        if (saveDraft?.data?.attributes) {
+          const { profile, contract, company_id } = saveDraft.data.attributes;
+
+          if (profile?.email_address && contract?.date_start) {
+            // retrieve company profile
+            const companyProfile = await strapi.db.query("api::company-profile.company-profile").findOne({
+              select: ['title'],
+              where: { id: company_id },
+            });
+            // retrieve job title
+            // const jobTitle = await strapi.db.query("api::job-title.job-title").findOne({
+            //   select: ['title'],
+            //   where: { id: job_title_id },
+            // });
+
+            const emailData = {
+              to: profile?.email_address,
+              // from: 'your verified email address', //e.g. single sender verification in SendGrid
+              // cc: 'valid email address',
+              // bcc: 'valid email address',
+              // replyTo: 'valid email address',
+              subject: `Invitation to ${companyProfile.title}`,
+              html: `<p>Dear ${profile.first_name}  ${profile.last_name}</p>
+                <p>We would like to welcome you to our platform.</p>
+                <p><a href='${process.env.CLIENT_URL}/auth/invite?code=${code}'>Open the invitation</a></p>
+                <p>Best Regards,<br/>${companyProfile.title}</p>
+              `,
+            };
+            await strapi.plugins['email'].services.email.send(emailData);
+
+            response = saveDraft;
+          }
+        }
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    }
 
     if (!response)  {
       throw new NotFoundError('Does not exist');
