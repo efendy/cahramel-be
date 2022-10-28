@@ -183,8 +183,8 @@ module.exports = createCoreController(
             id: userContract.id,
             profile: userProfile,
             contract: userContract,
-            company_id: contract.company_id,
-            job_title_id: contract.job_title_id,
+            company_id: contract.company_profile,
+            job_title_id: contract.job_title,
           });
         }
       }
@@ -263,7 +263,7 @@ module.exports = createCoreController(
           ctx.request.body.data.draft = false;
           ctx.request.body.data.code = code;
           const saveDraft = await this.draftSavePrivate(ctx);
-
+          console.log(saveDraft.data);
           if (saveDraft?.data?.attributes) {
             const { profile, contract, company_id } = saveDraft.data.attributes;
 
