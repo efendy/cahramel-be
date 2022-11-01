@@ -20,21 +20,42 @@
     "order": {
       "type": "integer"
     },
-    "title": {
-      "type": "string"
-    },
-    "description": {
-      "type": "text"
-    },
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
+      ]
+    },
+    "video_url": {
+      "type": "string"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "content",
+        "image",
+        "video_url",
+        "document",
+        "user_profile_upload_image",
+        "user_profile_update_data",
+        "user_document"
+      ],
+      "default": "content"
+    },
+    "document": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
       ],
       "type": "media",
       "multiple": false
     },
-    "video_url": {
-      "type": "string"
+    "content": {
+      "type": "richtext"
     }
   }
 }

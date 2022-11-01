@@ -34,7 +34,7 @@
       "relation": "oneToOne",
       "target": "api::company-profile.company-profile"
     },
-    "is_actived": {
+    "is_activated": {
       "type": "boolean",
       "default": false
     }
