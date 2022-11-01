@@ -19,6 +19,22 @@
     },
     "order": {
       "type": "integer"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "video_url": {
+      "type": "string"
     }
   }
 }

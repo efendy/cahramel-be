@@ -4,17 +4,14 @@
   "info": {
     "singularName": "onboarding",
     "pluralName": "onboardings",
-    "displayName": "Onboarding"
+    "displayName": "Onboarding",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
-    "is_published": {
-      "type": "boolean",
-      "default": false
-    },
     "title": {
       "type": "string",
       "required": true
@@ -22,20 +19,24 @@
     "description": {
       "type": "text"
     },
-    "job_title": {
+    "job_titles": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::job-title.job-title"
     },
-    "department": {
+    "departments": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::department.department"
     },
     "company_profile": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::company-profile.company-profile"
+    },
+    "is_actived": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
