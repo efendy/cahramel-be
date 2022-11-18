@@ -4,7 +4,8 @@
   "info": {
     "singularName": "leave-type",
     "pluralName": "leave-types",
-    "displayName": "Leave Type"
+    "displayName": "Leave Type",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -12,7 +13,8 @@
   "pluginOptions": {},
   "attributes": {
     "is_published": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "title": {
       "type": "string",
@@ -25,6 +27,20 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::company-profile.company-profile"
+    },
+    "number_of_days": {
+      "type": "decimal",
+      "required": true,
+      "default": 0
+    },
+    "day_type": {
+      "type": "enumeration",
+      "enum": [
+        "half_day",
+        "full_day"
+      ],
+      "default": "full_day",
+      "required": false
     }
   }
 }

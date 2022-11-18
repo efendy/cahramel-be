@@ -95,6 +95,14 @@
     "code": {
       "type": "string",
       "private": true
+    },
+    "current_onboard_order": {
+      "type": "integer",
+      "default": 0
+    },
+    "current_offboard_order": {
+      "type": "integer",
+      "default": 0
     }
   }
 }
