@@ -37,6 +37,12 @@
     "is_activated": {
       "type": "boolean",
       "default": false
+    },
+    "onboarding_steps": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::onboarding-step.onboarding-step",
+      "mappedBy": "onboarding"
     }
   }
 }

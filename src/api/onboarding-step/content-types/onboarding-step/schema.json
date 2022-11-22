@@ -12,11 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "onboarding": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::onboarding.onboarding"
-    },
     "order": {
       "type": "integer"
     },
@@ -45,17 +40,24 @@
       "default": "content"
     },
     "document": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "content": {
       "type": "richtext"
+    },
+    "onboarding": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::onboarding.onboarding",
+      "inversedBy": "onboarding_steps"
     }
   }
 }
