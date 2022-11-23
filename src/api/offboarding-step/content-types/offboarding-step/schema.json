@@ -12,15 +12,38 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "offboarding": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::offboarding.offboarding"
-    },
     "order": {
       "type": "integer",
       "required": true,
       "default": 0
+    },
+    "offboarding": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::offboarding.offboarding",
+      "inversedBy": "offboarding_steps"
+    },
+    "document": {
+      "allowedTypes": [
+        "images",
+        "videos",
+        "audios",
+        "files"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "content",
+        "image",
+        "document"
+      ],
+      "default": "content"
     }
   }
 }
