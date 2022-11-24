@@ -4,7 +4,8 @@
   "info": {
     "singularName": "user-leave",
     "pluralName": "user-leaves",
-    "displayName": "User Leave"
+    "displayName": "User Leave",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -15,6 +16,45 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::leave-type.leave-type"
+    },
+    "user_contract": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-contract.user-contract"
+    },
+    "start_date": {
+      "type": "date"
+    },
+    "end_date": {
+      "type": "date"
+    },
+    "remarks": {
+      "type": "string"
+    },
+    "attachments": {
+      "allowedTypes": [
+        "images",
+        "files"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "email_to_notify": {
+      "type": "email"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "new",
+        "approved",
+        "rejected"
+      ],
+      "default": "new"
+    },
+    "status_updated_by": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-contract.user-contract"
     }
   }
 }
