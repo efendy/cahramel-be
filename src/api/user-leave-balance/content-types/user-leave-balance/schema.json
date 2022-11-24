@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_leave_balances",
+  "info": {
+    "singularName": "user-leave-balance",
+    "pluralName": "user-leave-balances",
+    "displayName": "User Leave Balance"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "balance": {
+      "type": "decimal"
+    },
+    "leave_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::leave-type.leave-type"
+    },
+    "user_contract": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-contract.user-contract"
+    }
+  }
+}
