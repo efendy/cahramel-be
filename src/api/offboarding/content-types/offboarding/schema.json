@@ -23,15 +23,17 @@
     "description": {
       "type": "text"
     },
-    "job_title": {
+    "job_titles": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::job-title.job-title"
+      "relation": "oneToMany",
+      "target": "api::job-title.job-title",
+      "mappedBy": "offboarding"
     },
-    "department": {
+    "departments": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::department.department"
+      "relation": "oneToMany",
+      "target": "api::department.department",
+      "mappedBy": "offboarding"
     },
     "company_profile": {
       "type": "relation",

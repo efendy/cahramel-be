@@ -28,6 +28,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::industry-type.industry-type"
+    },
+    "offboarding": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::offboarding.offboarding",
+      "inversedBy": "job_titles"
     }
   }
 }
